@@ -6,16 +6,16 @@ public class Customer {
     private String address;
     private int pincode;
     private String phoneNo;
-    private double initialDeposit;
+    private double Balance;
 
     public Customer(int customerId, String name, String address,
-                    int pincode, String phoneNo, double initialDeposit) {
+                    int pincode, String phoneNo, double Balance) {
         this.customerId = customerId;
         this.name = name;
         this.address = address;
         this.pincode = pincode;
         this.phoneNo = phoneNo;
-        this.initialDeposit = initialDeposit;
+        this.Balance = Balance;
     }
 
     public int getCustomerId() { return customerId; }
@@ -23,5 +23,5 @@ public class Customer {
     public String getAddress() { return address; }
     public int getPincode() { return pincode; }
     public String getPhoneNo() { return phoneNo; }
-    public double getInitialDeposit() { return initialDeposit; }
+    public double getBalance() { return Balance; }
 }

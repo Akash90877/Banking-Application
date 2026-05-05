@@ -8,8 +8,8 @@ import java.sql.Statement;
 
 public class CustomerDAO {
     public void insert(Customer c) throws SQLException {
-        String sql = "INSERT INTO customer_details " +
-                     "(customer_id, name, address, Pincode, PhoneNo, Initial_deposit) " +
+        String sql = "INSERT INTO customer_details" +
+                     "(customer_id, name, address, Pincode, PhoneNo, Balance) " +
                      "VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -18,9 +18,9 @@ public class CustomerDAO {
             ps.setString(3, c.getAddress());
             ps.setInt(4, c.getPincode());
             ps.setString(5, c.getPhoneNo());
-            ps.setDouble(6, c.getInitialDeposit());
+            ps.setDouble(6, c.getBalance());
             ps.executeUpdate();
-            System.out.println("Customer inserted successfully");
+            System.out.println("Added Account successfully");
         }
     }
     public void getAll() throws SQLException {
@@ -35,13 +35,13 @@ public class CustomerDAO {
                     rs.getString("address") + " | " +
                     rs.getInt("Pincode") + " | " +
                     rs.getString("PhoneNo") + " | " +
-                    rs.getDouble("Initial_deposit")
+                    rs.getDouble("Balance")
                 );
             }
         }
     }
     public void update(int id, String address, double deposit) throws SQLException {
-        String sql = "UPDATE customer_details SET address=?, Initial_deposit=? WHERE customer_id=?";
+        String sql = "UPDATE customer_details SET address=?, Balance=? WHERE customer_id=?";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, address);
@@ -61,7 +61,7 @@ public class CustomerDAO {
         }
     }
     public void deposit(int id, double amount) throws SQLException {
-    String sql = "UPDATE customer_details SET Initial_deposit = Initial_deposit + ? WHERE customer_id=?";
+    String sql = "UPDATE customer_details SET Balance = Balance + ? WHERE customer_id=?";
     try (Connection con = DBConnection.getConnection();
          PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setDouble(1, amount);
@@ -72,13 +72,13 @@ public class CustomerDAO {
 }
 public void withdraw(int id, double amount) throws SQLException {
     String checkSql = "SELECT Initial_deposit FROM customer_details WHERE customer_id=?";
-    String updateSql = "UPDATE customer_details SET Initial_deposit=? WHERE customer_id=?";
+    String updateSql = "UPDATE customer_details SET Balance=? WHERE customer_id=?";
     try (Connection con = DBConnection.getConnection();
          PreparedStatement check = con.prepareStatement(checkSql)) {
         check.setInt(1, id);
         ResultSet rs = check.executeQuery();
         if (rs.next()) {
-            double balance = rs.getDouble("Initial_deposit");
+            double balance = rs.getDouble("Balance");
             if (balance >= amount) {
                 double newBalance = balance - amount;
                 PreparedStatement update = con.prepareStatement(updateSql);
@@ -95,13 +95,13 @@ public void withdraw(int id, double amount) throws SQLException {
     }
 }
 public void checkBalance(int id) throws SQLException {
-    String sql = "SELECT Initial_deposit FROM customer_details WHERE customer_id=?";
+    String sql = "SELECT Balance FROM customer_details WHERE customer_id=?";
     try (Connection con = DBConnection.getConnection();
          PreparedStatement ps = con.prepareStatement(sql)) {
         ps.setInt(1, id);
         ResultSet rs = ps.executeQuery();
         if (rs.next()) {
-            System.out.println("Current Balance: " + rs.getDouble("Initial_deposit"));
+            System.out.println("Current Balance: " + rs.getDouble("Balance"));
         } else {
             System.out.println("Account not found");
         }
