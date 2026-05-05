@@ -16,7 +16,7 @@ public class MainApp {
             switch (choice) {
 
                 case 1:
-                    System.out.println("Enter ID:");
+                    System.out.println("Enter AccNo:");
                     int id = sc.nextInt(); sc.nextLine();
 
                     System.out.println("Enter Name:");
@@ -39,7 +39,7 @@ public class MainApp {
                     break;
 
     case 2:
-        System.out.println("Enter ID:");
+        System.out.println("Enter AccNo:");
         int did = sc.nextInt();
         System.out.println("Enter deposit amount:");
         double damt = sc.nextDouble();
@@ -47,7 +47,7 @@ public class MainApp {
         break;
 
     case 3:
-        System.out.println("Enter ID:");
+        System.out.println("Enter AccNo:");
         int wid = sc.nextInt();
         System.out.println("Enter withdraw amount:");
         double wamt = sc.nextDouble();
@@ -55,13 +55,13 @@ public class MainApp {
         break;
 
     case 4:
-        System.out.println("Enter ID:");
+        System.out.println("Enter AccNo:");
         int cid = sc.nextInt();
         dao.checkBalance(cid);
         break;
 
     case 5:
-        System.out.println("Enter ID to delete:");
+        System.out.println("Enter AccNo you want to delete:");
         dao.delete(sc.nextInt());
         break;
 
